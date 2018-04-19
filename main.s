@@ -1,30 +1,33 @@
     .syntax unified
     .text
+    .arch armv7a
+    .fpu vfp 
 
     @ Main file for Lab 3
     @ Jillian Empey
 
-    .arch armv7a
-    .fpu vfp 
-done:
-      ldr   r0, =ex
-      bl    printf
-      b     quit
 plus:
-      mov   r0, #1
-      mov   r1, #2     
+      mov   r0, r5
+      mov   r1, r4
+      bl    intadd   //call intadd
+      b     result
+subtract:
+      mov   r0, r5
+      mov   r1, r4
+      bl    intsub
+      b     result
+multiply:
+      mov   r0, r5
+      mov   r1, r4
+      bl    intmul
+      b     result
+result:
+      mov   r1, r0
       ldr   r0, =pres
       bl    printf
-      bl    intadd
-      ldr   r1, result
-      str   r0, [r1, #0]
-      ldr   r0, =result
-      bl    printf
-      b loop 
-subtract:
-      b     loop
-multiply:
-      b     loop
+      b     again
+
+
     @ --------------------------------
     .global main
 main:
@@ -44,7 +47,7 @@ loop:
       mov   r1, sp
       bl    scanf
       ldrb  r0, [sp] //scanned number in r0
-      mov   r3, r0   //number1 in r0
+      mov   r5, r0   //number1 in r3
       //Enter Number 2:
       ldr   r0, =pn2
       bl    printf
@@ -52,7 +55,8 @@ loop:
       mov   r1, sp
       bl    scanf
       ldrb  r0, [sp]
-      mov   r1, r3
+      mov   r4, r0   //number2 in r4
+
       //Enter Operation
       ldr   r0, =po
       bl    printf
@@ -62,8 +66,10 @@ loop:
       ldrb  r0, [sp]
       cmp   r0, #43 // +
       beq   plus
+      ldrb  r0, [sp]
       cmp   r0, #45 // -
-      beq   subtract
+      beq   subtract 
+      ldrb  r0, [sp]
       cmp   r0, #42 // *
       beq   multiply
       // Invalid Operation
@@ -75,25 +81,14 @@ again:
       ldr   r0, =scanchar
       mov   r1, sp
       bl    scanf
-      ldrb  r0, [sp]
-      cmp   r0, #121
-      beq   loop
-      b     done
-    @ You'll need to scan characters for the operation and to determine
-    @ if the program should repeat.
-    @ To scan a character, and compare it to another, do the following
-   /*   ldr     r0, =scanchar
-      mov     r1, sp          @ Save stack pointer to r1, you must create space
-      bl      scanf           @ Scan user's answer
-      ldr     r1, =yes        @ Put address of 'y' in r1
+      ldr   r1, =yes
       ldrb    r1, [r1]        @ Load the actual character 'y' into r1
       ldrb    r0, [sp]        @ Put the user's value in r0
-      cmp     r0, r1          @ Compare user's answer to char 'y'
-      b       loop */           @ branch to appropriate location
-    @ this only works for character scans. You'll need a different
-    @ format specifier for scanf for an integer ("%d"), and you'll
-    @ need to use the ldr instruction instead of ldrb to load an int.
-quit:
+      cmp     r0, r1 
+      beq   loop
+
+end:
+
 ex:
    .asciz   "success\n"
 fail:
@@ -113,10 +108,12 @@ po:
 pagain:
     .asciz  "Again? "
 pres:
-    .asciz  "Result is: "
+    .asciz  "Result is: %d\n"
 pinvalid:
     .asciz  "Invalid Operation Entered.\n"
-result:
-    .asciz  "%d"
 
+result2:
+    .asciz  "  "
+test:
+      .asciz   "test: %d\n"
 
