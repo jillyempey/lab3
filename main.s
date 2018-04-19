@@ -26,19 +26,12 @@ result:
       ldr   r0, =pres
       bl    printf
       b     again
-
-
     @ --------------------------------
     .global main
 main:
+    
+ //     push {lr}
     @ driver function main lives here, modify this for your other functions
-/*      mov r0, #1
-      mov r1, #2
-      bl intadd
-      cmp r0, #3
-      beq done
-      ldr r0, =fail
-      bl printf*/
       //Enter Number 1: 
 loop:
       ldr   r0, =pn1
@@ -64,14 +57,15 @@ loop:
       mov   r1, sp
       bl    scanf
       ldrb  r0, [sp]
+
+      // Jump to Operation
       cmp   r0, #43 // +
       beq   plus
-      ldrb  r0, [sp]
       cmp   r0, #45 // -
       beq   subtract 
-      ldrb  r0, [sp]
       cmp   r0, #42 // *
       beq   multiply
+
       // Invalid Operation
       ldr   r0, =pinvalid
       bl    printf
@@ -86,9 +80,8 @@ again:
       ldrb    r0, [sp]        @ Put the user's value in r0
       cmp     r0, r1 
       beq   loop
-
 end:
-
+   //   pop {pc}
 ex:
    .asciz   "success\n"
 fail:
