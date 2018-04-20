@@ -20,15 +20,19 @@ intadd:
     */ 
    push {r2, r3, r4, r5, r6, r7, lr}
 
-/*   cmp   r0, #0
-   bge   next
-   mvn   r0, r0
-   add   r0, r0, #1
+/*   cmp   r0, #254
+   bne   next
+   b  done
+   lsl   r0, #1
+   lsr   r0, #1
+   neg   r0, r0*/
+/*   mvn   r0, r0
+   add   r0, r0, #1*/
 next:
    cmp   r1, #0
    bge   cont
    mvn   r1, r1
-   add   r1, r1, #1*/
+   add   r1, r1, #1
 cont:
 
    push {r0, r1}  // save num1 and num2
@@ -61,7 +65,7 @@ loop:
    lsl   r2, #1      // shift carry 
    cmp   r5, #0   //if clearbit is 0, then overflow has happened/we are done
    bne   loop
-   
+done: 
    mov   r0, r7
    add   sp, sp, #8
    pop {r2, r3, r4, r5, r6, r7, pc}

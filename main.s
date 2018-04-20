@@ -7,8 +7,11 @@
     @ Jillian Empey
 
 plus:
+
       mov   r0, r5
       mov   r1, r4
+
+
       bl    intadd   //call intadd
       b     result
 subtract:
@@ -29,9 +32,7 @@ result:
     @ --------------------------------
     .global main
 main:
-    
- //     push {lr}
-    @ driver function main lives here, modify this for your other functions
+      push  {ip, lr}
       //Enter Number 1: 
 loop:
       ldr   r0, =pn1
@@ -80,8 +81,9 @@ again:
       ldrb    r0, [sp]        @ Put the user's value in r0
       cmp     r0, r1 
       beq   loop
-end:
-   //   pop {pc}
+      pop   {ip, pc}
+//      ldr   pc, [sp], #4
+      @-------------------------------
 ex:
    .asciz   "success\n"
 fail:
