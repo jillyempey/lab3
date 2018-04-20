@@ -17,13 +17,15 @@ intadd:
       R6: blank
       R7: total 
     */ 
-   push {r2, r3, r4, r5, r6, lr}
+   push {r2, r3, r4, r5, r6, r7, lr}
    push {r0, r1}  // save num1 and num2
    mov r2, #0 // initialize cin to 0
    mov r3, #0 // initialize cout to 0
    mov r5, #1 // initialize clearbit to 1
    mov   r7, #0
 loop: 
+   ldr   r0, [sp, #4]
+   ldr   r1, [sp, #0]
    // isolate bit i to work with
    and r0, r0, r5
    and r1, r1, r5
@@ -39,9 +41,12 @@ loop:
    pop   {r6}
    orr   r3, r3, r6 // carryout now in r3
    mov   r2, r3      //carryout->carry in
-   orr   r7, r4, r6  //set new bit
+   orr   r7, r4, r7  //set new bit
    lsl   r5, #1       //shift clearbit to left
+   lsl   r2, #1      // shift carry 
    cmp   r5, #0   //if clearbit is 0, then overflow has happened/we are done
    bne   loop
-
-   pop {r2, pc}
+   
+   mov   r0, r7
+   add   sp, sp, #8
+   pop {r2, r3, r4, r5, r6, r7, pc}
