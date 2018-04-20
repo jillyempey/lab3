@@ -5,6 +5,7 @@
 
    .arch armv7a
    .fpu vfp
+
    @ ----------------------------
    .global intadd
 intadd:
@@ -18,7 +19,21 @@ intadd:
       R7: total 
     */ 
    push {r2, r3, r4, r5, r6, r7, lr}
+
+/*   cmp   r0, #0
+   bge   next
+   mvn   r0, r0
+   add   r0, r0, #1
+next:
+   cmp   r1, #0
+   bge   cont
+   mvn   r1, r1
+   add   r1, r1, #1*/
+cont:
+
    push {r0, r1}  // save num1 and num2
+   
+
    mov r2, #0 // initialize cin to 0
    mov r3, #0 // initialize cout to 0
    mov r5, #1 // initialize clearbit to 1

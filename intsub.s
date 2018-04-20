@@ -12,7 +12,8 @@ intsub:
       R1: number 2
     */ 
    push {r2, lr}
-    
-   sub r0, r0, r1
+   
+   neg   r1, r1
+   bl    intadd
 
    pop {r2, pc}
