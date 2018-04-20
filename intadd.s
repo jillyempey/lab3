@@ -20,21 +20,6 @@ intadd:
     */ 
    push {r2, r3, r4, r5, r6, r7, lr}
 
-/*   cmp   r0, #254
-   bne   next
-   b  done
-   lsl   r0, #1
-   lsr   r0, #1
-   neg   r0, r0*/
-/*   mvn   r0, r0
-   add   r0, r0, #1*/
-next:
-   cmp   r1, #0
-   bge   cont
-   mvn   r1, r1
-   add   r1, r1, #1
-cont:
-
    push {r0, r1}  // save num1 and num2
    
 

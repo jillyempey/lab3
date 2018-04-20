@@ -10,8 +10,6 @@ plus:
 
       mov   r0, r5
       mov   r1, r4
-
-
       bl    intadd   //call intadd
       b     result
 subtract:
@@ -40,7 +38,8 @@ loop:
       ldr   r0, =scannum
       mov   r1, sp
       bl    scanf
-      ldrb  r0, [sp] //scanned number in r0
+      
+      ldr  r0, [sp] //scanned number in r0
       mov   r5, r0   //number1 in r3
       //Enter Number 2:
       ldr   r0, =pn2
@@ -48,7 +47,7 @@ loop:
       ldr   r0, =scannum
       mov   r1, sp
       bl    scanf
-      ldrb  r0, [sp]
+      ldr  r0, [sp]
       mov   r4, r0   //number2 in r4
 
       //Enter Operation
@@ -82,7 +81,6 @@ again:
       cmp     r0, r1 
       beq   loop
       pop   {ip, pc}
-//      ldr   pc, [sp], #4
       @-------------------------------
 ex:
    .asciz   "success\n"
