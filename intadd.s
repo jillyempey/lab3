@@ -52,5 +52,5 @@ loop:
    bne   loop
 done: 
    mov   r0, r7
-   add   sp, sp, #8
+   pop   {r2, r3}
    pop {r2, r3, r4, r5, r6, r7, pc}
