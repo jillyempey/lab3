@@ -18,7 +18,7 @@ intadd:
       R6: blank
       R7: total 
     */ 
-   push {r2, r3, r4, r5, r6, r7, lr}
+   push {r1, r2, r3, r4, r5, r6, r7, lr}
 
    push {r0, r1}  // save num1 and num2
    
@@ -53,4 +53,4 @@ loop:
 done: 
    mov   r0, r7
    pop   {r2, r3}
-   pop {r2, r3, r4, r5, r6, r7, pc}
+   pop {r1, r2, r3, r4, r5, r6, r7, pc}
